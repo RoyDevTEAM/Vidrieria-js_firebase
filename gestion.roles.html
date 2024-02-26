@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Menú Lateral -->
+        <div class="side-menu">
+            <div class="brand-name">
+                <h1>Roy</h1>
+            </div>
+            <ul style="list-style-type: none; padding: 0;">
+                <li><a href="dashboar-admin.html" style="color: white; text-decoration: none;"><i class="fas fa-chart-bar" style="color: white;"></i>&nbsp; <span style="color: white;">Dashboard</span></a></li>
+                <li><a href="gestion-ventas.html" style="color: white; text-decoration: none;"><i class="fas fa-user-graduate" style="color: white;"></i>&nbsp;<span style="color: white;">Ventas</span></a></li>
+                <li><a href="gestion-productos.html" style="color: white; text-decoration: none;"><i class="fas fa-box" style="color: white;"></i>&nbsp;<span style="color: white;">Productos</span></a></li>
+                <li><a href="gestion.roles.html" style="color: white; text-decoration: none;"><i class="fas fa-school" style="color: white;"></i>&nbsp;<span style="color: white;">Roles</span></a></li>
+                <li><a href="gestion-categorias.html" style="color: white; text-decoration: none;"><i class="fas fa-hand-holding-usd" style="color: white;"></i>&nbsp;<span style="color: white;">Categorias</span></a></li>
+                <li><a href="gestion-proveedores.html" style="color: white; text-decoration: none;"><i class="fas fa-question-circle" style="color: white;"></i>&nbsp; <span style="color: white;">Proveedores</span></a></li>
+                <li><a href="#" style="color: white; text-decoration: none;"><i class="fas fa-cog" style="color: white;"></i>&nbsp;<span style="color: white;">Settings</span></a></li>
+            </ul>
+        </div>
+
+        <!-- Contenido Principal -->
+        <div class="main-content">
+            <div class="header">
+                <div class="nav">
+                    <div class="search">
+                        <input type="text" placeholder="Search..">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="user">
+                        <a href="#" class="btn">Add New</a>
+                        <i class="fas fa-bell"></i>
+                        <div class="img-case">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col">
+                            <h2>Lista de Roles</h2>
+                            <!-- Campo de búsqueda -->
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="busquedaRol" placeholder="Buscar por nombre...">
+                            </div>
+                            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#nuevoRolModal">Nuevo Rol</button>
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rolesTablaBody">
+                                    <!-- Aquí se mostrarán los roles -->
+                                </tbody>
+                            </table>
+                            <!-- Paginación -->
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination" id="paginacionRoles">
+                                    <!-- Botones de paginación aquí -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Modal para agregar nuevo rol -->
+                <div class="modal fade" id="nuevoRolModal" tabindex="-1" aria-labelledby="nuevoRolModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="nuevoRolModalLabel">Nuevo Rol</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="nombreRol" class="form-label">Nombre del Rol:</label>
+                                        <input type="text" class="form-control" id="nombreRol">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" id="guardarRolBtn">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bootstrap JS -->
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+            
+                <!-- jQuery -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            
+                <!-- Firebase JS -->
+                <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-compat.js"></script>
+                <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+                <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+                
+                <!-- Configuración y Funciones JavaScript -->
+                <script src="js/firebase-config.js"></script>
+                <script src="js/gestion-roles.js"></script>
+            
+                <!-- Llama a la función obtenerRoles() después de que se haya cargado el documento -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        obtenerRoles();
+                    });
+                </script>
+            
+                <script>
+                    // Cuando el documento esté listo
+                    $(document).ready(function() {
+                        // Al hacer clic en el botón de guardar rol
+                        $("#guardarRolBtn").click(function() {
+                            // Guarda el nuevo rol
+                            guardarNuevoRol();
+                            // Cierra el modal
+                            $('#nuevoRolModal').modal('hide');
+                            // Muestra un mensaje de éxito
+                            alert("¡Rol agregado exitosamente!");
+                        });
+                    });
+                </script>    </div>
+          </div>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="script.js"></script>
+        <style>/* Estilos para el menú lateral */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 300px; /* Aumentamos el ancho del menú lateral */
+            background: #222;
+            padding-top: 70px; /* Aumentamos el espacio para el encabezado */
+            transition: all 0.3s;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3); /* Agregamos sombra */
+            z-index: 1;
+        }
+        
+        /* Estilos para el encabezado del menú lateral */
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            background: #343a40;
+        }
+        
+        .sidebar-header h3 {
+            color: white;
+        }
+        
+        /* Estilos para los elementos del menú */
+        #sidebar ul.components {
+            padding: 20px 0;
+        }
+        
+        #sidebar ul li {
+            padding: 15px; /* Aumentamos el espacio entre elementos del menú */
+            font-size: 1.2em;
+            transition: all 0.3s;
+            transform-style: preserve-3d; /* Añadimos efecto 3D */
+        }
+        
+        #sidebar ul li:hover {
+            background-color: #343a40;
+            transform: translateX(5px); /* Movimiento lateral en hover */
+        }
+        
+        #sidebar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* Estilos para el contenido principal */
+        #content {
+            margin-left: 300px; /* Ancho del menú lateral */
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        /* Estilos para el botón de toggle del menú lateral */
+        #sidebarCollapse {
+            position: fixed;
+            z-index: 1000;
+            left: 20px;
+            top: 10px;
+            background-color: #343a40;
+            color: white;
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        #sidebarCollapse:hover {
+            background-color: #555;
+            transform: rotate(180deg); /* Rotación en hover */
+        }
+        </style>
+        <script>$(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+        </script>   
+        </div>
+    </div>
+    <style>/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos para el menú lateral */
+.side-menu {
+    background-color: #333;
+    color: white;
+    width: 250px;
+    padding: 20px 0;
+    position: fixed;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.brand-name h1 {
+    text-align: center;
+}
+
+.side-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.side-menu ul li {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.side-menu ul li:hover {
+    background-color: #555;
+}
+
+.side-menu ul li span {
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+/* Estilos para el contenido principal */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+/* Estilos para el encabezado */
+.header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search button {
+    padding: 8px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.user .btn {
+    margin-right: 10px;
+    background-color: #28a745;
+    border: none;
+    padding: 8px 15px;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+/* Estilos para las tarjetas */
+.cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 200px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card h1 {
+    font-size: 36px;
+}
+
+.card h3 {
+    font-size: 18px;
+    color: #6c757d;
+}
+
+.icon-case {
+    margin-top: 20px;
+}
+
+/* Estilos para el contenido 2 */
+.content-2 {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.recent-payments,
+.new-students {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-basis: 48%;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.title .btn {
+    background-color: #007bff;
+    border: none;
+    padding: 8px 15px;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+/* Estilos para las tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+/* Estilos para los iconos */
+.icon-case i {
+    font-size: 36px;
+    color: #007bff;
+}
+
+.img-case i {
+    font-size: 36px;
+    color: #28a745;
+}
+</style>
+    <script src="script.js"></script>
+</body>
+</html>

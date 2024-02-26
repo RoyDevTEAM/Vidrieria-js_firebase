@@ -1,0 +1,129 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilos para el menú lateral */
+.side-menu {
+  background-color: #333;
+  color: white;
+  width: 250px;
+  padding: 20px 0;
+  position: fixed;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.brand-name h3 {
+  text-align: center;
+}
+
+.side-menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.side-menu ul li {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.side-menu ul li:hover {
+  background-color: #555;
+}
+
+.side-menu ul li span {
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+/* Estilos para el contenido principal */
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+/* Estilos para el encabezado */
+.header {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search button {
+  padding: 8px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.user .btn {
+  margin-right: 10px;
+  background-color: #28a745;
+  border: none;
+  padding: 8px 15px;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+/* Estilos para las tarjetas */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  width: calc(33.33% - 20px); /* Ancho del 33.33% con margen entre tarjetas */
+  margin-right: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:last-child {
+  margin-right: 0; /* Eliminar el margen derecho de la última tarjeta en una fila */
+}
+
+.card h2 {
+  margin-bottom: 15px;
+}
+
+/* Estilos para los gráficos */
+canvas {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/dashboard-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Menú Lateral -->
+        <div class="side-menu">
+          <ul style="list-style-type: none; padding: 0;">
+            <li><a href="dashboar-admin.html" style="color: white; text-decoration: none;"><i class="fas fa-chart-bar" style="color: white;"></i>&nbsp; <span style="color: white;">Dashboard</span></a></li>
+            <li><a href="gestion-ventas.html" style="color: white; text-decoration: none;"><i class="fas fa-user-graduate" style="color: white;"></i>&nbsp;<span style="color: white;">Ventas</span></a></li>
+            <li><a href="gestion-productos.html" style="color: white; text-decoration: none;"><i class="fas fa-box" style="color: white;"></i>&nbsp;<span style="color: white;">Productos</span></a></li>
+            <li><a href="gestion.roles.html" style="color: white; text-decoration: none;"><i class="fas fa-school" style="color: white;"></i>&nbsp;<span style="color: white;">Roles</span></a></li>
+            <li><a href="gestion-categorias.html" style="color: white; text-decoration: none;"><i class="fas fa-hand-holding-usd" style="color: white;"></i>&nbsp;<span style="color: white;">Categorias</span></a></li>
+            <li><a href="gestion-proveedores.html" style="color: white; text-decoration: none;"><i class="fas fa-question-circle" style="color: white;"></i>&nbsp; <span style="color: white;">Proveedores</span></a></li>
+            <li><a href="#" style="color: white; text-decoration: none;"><i class="fas fa-cog" style="color: white;"></i>&nbsp;<span style="color: white;">Settings</span></a></li>
+        </ul>        </div>
+
+        <!-- Contenido Principal -->
+        <div class="main-content">
+            <div class="header">
+              <div class="nav">
+                <div class="search">
+                    <input type="text" placeholder="Search..">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user">
+                    <a href="#" class="btn">Add New</a>
+                    <i class="fas fa-bell"></i>
+                    <div class="img-case">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>            </div>
+            <div class="content">
+                <div class="cards">
+                    <!-- Card de Ventas Recientes -->
+                    <div class="card" id="ventasCard">
+                        <div class="title">
+                            <h2>Ventas Recientes</h2>
+                        </div>
+                        <canvas id="ventasChart" width="400" height="400"></canvas>
+                    </div>
+
+                    <!-- Card de Clientes Recientes -->
+                    <div class="card" id="clientesCard">
+                        <div class="title">
+                            <h2>Clientes Recientes</h2>
+                        </div>
+                        <!-- Aquí puedes agregar contenido adicional según tus necesidades -->
+                    </div>
+
+                    <!-- Card de Pagos Recientes -->
+                    <div class="card" id="pagosCard">
+                        <div class="title">
+                        </div>
+                        <canvas id="metodosPagoChart" width="400" height="400"></canvas>
+
+                        <!-- Aquí puedes agregar contenido adicional según tus necesidades -->
+                    </div>
+
+                    <!-- Card de Productos Más Vendidos -->
+                    <div class="card" id="productosCard">
+                        <div class="title">
+                            <h2>Productos Más Vendidos</h2>
+                        </div>
+                        <!-- Aquí puedes agregar contenido adicional según tus necesidades -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Configuración y Funciones JavaScript -->
+    <script src="js/firebase-config.js"></script>
+
+    <script>
+      // Función para cargar el contenido principal
+      function cargarContenidoPrincipal() {
+        cargarVentasRecientes();
+        cargarClientesRecientes();
+        cargarProductosMasVendidos();
+      }
+
+      // Función para cargar las ventas recientes en la tarjeta correspondiente
+      function cargarVentasRecientes() {
+        // Aquí puedes realizar una solicitud al servidor para obtener los datos de las ventas recientes
+        // Luego, puedes utilizar Chart.js para dibujar el gráfico de ventas en el canvas
+        // Ejemplo:
+        const ctx = document.getElementById('ventasChart').getContext('2d');
+        const data = {
+          labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+          datasets: [{
+            label: 'Ventas por Mes',
+            data: [12, 19, 3, 5, 2],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+          }]
+        };
+        const options = {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        };
+        const ventasChart = new Chart(ctx, {
+          type: 'bar',
+          data: data,
+          options: options
+        });
+      }
+     // Función para cargar los clientes recientes en la tarjeta correspondiente
+function cargarClientesRecientes() {
+    // Referencia a la colección de usuarios en Firebase
+    const usuariosRef = firebase.firestore().collection('usuarios');
+
+    // Consulta para obtener los usuarios más recientes (ordenados por fecha de creación)
+    usuariosRef.orderBy('FechaNacimiento', 'desc').limit(5).get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No se encontraron clientes recientes.');
+                return;
+            }
+
+            // Limpiar la tarjeta de clientes antes de actualizarla
+            const clientesCard = document.getElementById('clientesCard');
+            clientesCard.innerHTML = '<h2>Clientes Recientes</h2>';
+
+            // Iterar sobre los documentos de usuarios obtenidos
+            snapshot.forEach(doc => {
+                const usuario = doc.data();
+                // Mostrar los detalles del cliente en la tarjeta de clientes
+                clientesCard.innerHTML += `
+                    <div>
+                        <h3>Nombre: ${usuario.Nombre}</h3>
+                        <p>Apellido: ${usuario.Apellido}</p>
+                        <p>Email: ${usuario.Email}</p>
+                        <p>Telefono: ${usuario.Telefono}</p>
+                        <p>Direccion: ${usuario.Direccion}</p>
+                        <!-- Agrega más campos según sea necesario -->
+                    </div>
+                    <hr>
+                `;
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener los clientes recientes:', error);
+        });
+}
+
+      
+  // Función para cargar los pagos recientes y calcular el método de pago más usado
+// Obtener el contexto del canvas
+const ctx = document.getElementById('metodosPagoChart').getContext('2d');
+
+// Datos de ejemplo para el gráfico de torta
+const data = {
+    labels: ['Efectivo', 'Tarjeta de Crédito', 'Transferencia Bancaria'],
+    datasets: [{
+        label: 'Métodos de Pago',
+        data: [300, 450, 200], // Monto total para cada método de pago
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)'
+        ],
+        borderWidth: 1
+    }]
+};
+
+// Opciones del gráfico
+const options = {
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+};
+
+// Crear el gráfico de torta utilizando Chart.js
+const metodosPagoChart = new Chart(ctx, {
+    type: 'pie',
+    data: data,
+    options: options
+});
+
+
+    // Función para cargar los productos más vendidos en la tarjeta correspondiente
+function cargarProductosMasVendidos() {
+    // Referencia a la colección de detalles de ventas en Firebase
+    const detallesVentasRef = firebase.firestore().collection('detallesVentas');
+
+    // Consulta para obtener el producto más vendido
+    detallesVentasRef.orderBy('Cantidad', 'desc').limit(1).get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No se encontraron detalles de ventas.');
+                return;
+            }
+
+            // Obtener el producto más vendido de la primera fila
+            const productoMasVendido = snapshot.docs[0].data();
+
+            // Actualizar la tarjeta de productos con los detalles del producto más vendido
+            const productosCard = document.getElementById('productosCard');
+            productosCard.innerHTML = `
+                <h2>Producto Más Vendido</h2>
+                <p>Producto ID: ${productoMasVendido.ProductoID}</p>
+                <p>Cantidad: ${productoMasVendido.Cantidad}</p>
+                <p>Precio Unitario: ${productoMasVendido.PrecioUnitario}</p>
+                <p>Total: ${productoMasVendido.Total}</p>
+            `;
+        })
+        .catch(error => {
+            console.error('Error al obtener los detalles de ventas:', error);
+        });
+}
+
+      // Llamar a la función cargarContenidoPrincipal al cargar la página
+      window.onload = cargarContenidoPrincipal;
+    </script>
+</body>
+</html>
